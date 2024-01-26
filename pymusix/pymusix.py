@@ -26,7 +26,7 @@ class PyMusix:
         self.spotify_image = None
         self.track_lyrics = None
         self.track_language = None
-        self.is_nsfw = None
+        self.is_explicit = None
         self.is_instrumental = None
         self.lyrics_url = None
         self.snippet = None
@@ -89,7 +89,7 @@ class PyMusix:
         track_snippet = response["track.snippet.get"]["message"]["body"]["snippet"]
         matcher_track = response["matcher.track.get"]["message"]["body"]["track"]
 
-        self.is_nsfw = track_lyrics["explicit"] == 1
+        self.is_explicit = track_lyrics["explicit"] == 1
         self.is_instrumental = track_lyrics["instrumental"] == 1
         self.track_lyrics = track_lyrics["lyrics_body"]
         self.language = track_lyrics["lyrics_language"]

@@ -12,7 +12,7 @@ setup(
     long_description_content_type="text/markdown",
     author="TrueMyst",
     url="https://github.com/TrueMyst/pymusix",
-    license="Apache",
+    license="MIT",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",

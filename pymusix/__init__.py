@@ -1,1 +1,1 @@
-from pymusix import PyMusix
+from .pymusix import *

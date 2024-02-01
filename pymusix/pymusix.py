@@ -1,5 +1,6 @@
 import re
 import requests
+from typing import Optional
 
 
 class PyMusix:
@@ -27,18 +28,53 @@ class PyMusix:
         self.primary_genre = None
         self.secondary_genre = None
 
-    def token(self, SCLIENT_ID, SCLIENT_SECRET, MXM_USERTOKEN):
+    def set_secrets(self, SCLIENT_ID, SCLIENT_SECRET, MXM_USERTOKEN):
+        """
+        Set secrets for better search results.
+
+        Parameters
+        ----------
+        SCLIENT_ID
+            Spotify Client ID
+
+        SCLIENT_SECRET
+            Spotify Client Secret
+
+        MXM_USERTOKEN
+            Musixmatch User Token (Not API Token)
+        """
         self.__SCLIENT_ID = SCLIENT_ID
         self.__SCLIENT_SECRET = SCLIENT_SECRET
         self.__MXM_USERTOKEN = MXM_USERTOKEN
 
-    def __get_uri(self, url):
-        pattern = re.compile(r"https://open\.spotify\.com/track/(\w+)")
-        matches = pattern.findall(url)
+    def __get_uri(self, url: str) -> str:
+        """
+        Returns the URI from a Spotify track link
 
-        return matches[0] if matches else ""
+        Parameters
+        ----------
+        url: str
+            Spotify track URL
+
+        Returns
+        -------
+        match: str
+            Spotify track URI
+        """
+        pattern = re.compile(r"https://open\.spotify\.com/track/(\w+)")
+        match = pattern.findall(url)[0] if pattern.findall(url) else ""
+
+        return match
 
     def __get_spotify_token(self):
+        """
+        Authenticates with Spotify's Web API and returns a token
+
+        Returns
+        -------
+        token: str
+            Returns the app token that will be used for retrieving track information
+        """
         endpoint = "https://accounts.spotify.com/api/token"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         payload = {
@@ -51,9 +87,28 @@ class PyMusix:
         return token
 
     def __authorization_header(self, token: str):
+        """
+        Returns the Authorization with the Bearer token
+        """
         return {"Authorization": f"Bearer {token}"}
 
-    def search_track(self, q_name=None, q_artist=None, q_url=None):
+    def search_track(
+        self, q_name: str, q_artist: Optional[str] = None, q_url: Optional[str] = None
+    ):
+        """
+        Searches for the desired track
+
+        Parameters
+        ----------
+        q_name: str
+            The name of the song track
+
+        q_artist: Optional[str]
+            The artist of the song track
+
+        q_url: Optional[str]
+            The Spotify track link
+        """
         spotify_endpoint = "https://api.spotify.com/v1/search"
         mxm_endpoint = "https://apic-desktop.musixmatch.com/ws/1.1/macro.subtitles.get?"
 
@@ -79,10 +134,7 @@ class PyMusix:
             self.spotify_uri = selected_track.get("id")
             self.spotify_image = selected_track["album"]["images"][0].get("url")
 
-        q_uri = ""
-
-        if q_uri:
-            q_uri = self.__get_uri(q_url)
+        q_uri = self.__get_uri(q_url) if q_url != None else ""
 
         mxm_params = {
             "format": "json",

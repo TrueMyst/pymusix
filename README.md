@@ -27,7 +27,7 @@ To install PyMusix from GitHub, follow these steps:
 	MUSIXMATCH_USER_TOKEN=your_musixmatch_user_token
 	```
 Obtain the Spotify client ID and client secret from the [Spotify Developer Dashboard](https://developer.spotify.com/).
- For the Musixmatch user token, you can follow the guide [here](https://github.com/khanhas/genius-spicetify#musicxmatch).
+For the Musixmatch user token, you can follow the guide [here](https://github.com/khanhas/genius-spicetify#musicxmatch).
     
 You are now ready to use PyMusix!
 
@@ -40,7 +40,7 @@ Example:
 ```python
 from pymusix import PyMusix
 
-song_info = PyMusix(q_name="Song Name", q_artist="Artist Name")
+song_info = PyMusix(q_name="Pluto Projector", q_artist="Rex Orange")
 print("Track Name:", song_info.track_name)
 print("Artist:", song_info.track_artist)
 print("Lyrics:", song_info.track_lyrics)

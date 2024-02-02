@@ -7,7 +7,7 @@ desc = (here / "README.md").read_text(encoding="utf-8")
 setup(
     name="pymusix",
     version="1.0.0",
-    description="Retrieve information about a song, including details like the artist, album, release date, genres, and lyrics using Spotify and MusixMatch API",
+    description="🌿 Retrieve information about a song, including details like the artist, album, release date, genres, and lyrics using Spotify and MusixMatch API",
     long_description=desc,
     long_description_content_type="text/markdown",
     author="TrueMyst",

@@ -4,6 +4,60 @@ from typing import Optional
 
 
 class PyMusix:
+    """
+    A PyMusix class, lets you retrieve information about a song track.
+
+    Attributes
+    ----------
+    name: str
+        The track's name.
+
+    artist: str
+        The track's artist.
+
+    published: str
+        Published date of the track.
+
+    duration: str
+        Duration of the track.
+
+    album_name: str
+        Name of the track's album.
+
+    spotify_url: str
+        Spotify URL for the track.
+
+    spotify_uri: str
+        Spotify URI for the track.
+
+    spotify_banner: str
+        Cover image URL for the track.
+
+    lyrics: str
+        Lyrics of the track.
+
+    lyrics_url: str
+        URL for the track's lyrics.
+
+    language: str
+        Language of the track.
+
+    is_explicit: bool
+        Checks if the song is NSFW.
+
+    is_instrumental: bool
+        Checks if the track is instrumental.
+
+    snippet: str
+        A small snippet from the lyrics.
+
+    primary_genre: str
+        Primary genre of the track.
+
+    secondary_genre: str
+        Secondary genre of the track.
+    """
+
     def __init__(self):
         # Set Token
         self.__SCLIENT_ID = None
@@ -11,19 +65,19 @@ class PyMusix:
         self.__MXM_USERTOKEN = None
 
         # Initialize properties with None values
-        self.track_name = None
-        self.track_artist = None
-        self.track_published = None
-        self.track_duration = None
+        self.name = None
+        self.artist = None
+        self.published = None
+        self.duration = None
         self.album_name = None
         self.spotify_url = None
         self.spotify_uri = None
-        self.spotify_image = None
-        self.track_lyrics = None
-        self.track_language = None
+        self.spotify_banner = None
+        self.lyrics = None
+        self.lyrics_url = None
+        self.language = None
         self.is_explicit = None
         self.is_instrumental = None
-        self.lyrics_url = None
         self.snippet = None
         self.primary_genre = None
         self.secondary_genre = None
@@ -125,14 +179,14 @@ class PyMusix:
         selected_track = track_data.get("tracks", {}).get("items", [])[0]
 
         if selected_track:
-            self.track_name = selected_track["name"]
-            self.track_artist = selected_track["album"]["artists"][0]["name"]
+            self.name = selected_track["name"]
+            self.artist = selected_track["album"]["artists"][0]["name"]
             self.album_name = selected_track["album"]["name"]
-            self.track_published = selected_track["album"]["release_date"]
-            self.track_duration = f"{selected_track['duration_ms'] // 60000:02d}:{(selected_track['duration_ms'] // 1000 % 60):02d}"
+            self.published = selected_track["album"]["release_date"]
+            self.duration = f"{selected_track['duration_ms'] // 60000:02d}:{(selected_track['duration_ms'] // 1000 % 60):02d}"
             self.spotify_url = selected_track["album"]["external_urls"].get("spotify")
             self.spotify_uri = selected_track.get("id")
-            self.spotify_image = selected_track["album"]["images"][0].get("url")
+            self.spotify_banner = selected_track["album"]["images"][0].get("url")
 
         q_uri = self.__get_uri(q_url) if q_url != None else ""
 
@@ -141,9 +195,9 @@ class PyMusix:
             "namespace": "lyrics_synched",
             "app_id": "web-desktop-app-v1.0",
             "subtitle_format": "mxm",
-            "q_track": self.track_name,
-            "q_artist": q_artist if q_artist != None else self.track_artist,
-            "track_spotify_id": q_uri if q_uri != None else self.spotify_uri,
+            "q_track": self.name,
+            "q_artist": self.artist,
+            "track_spotify_id": q_uri if q_uri is not None else self.spotify_uri,
             "usertoken": self.__MXM_USERTOKEN,
         }
 
@@ -156,7 +210,7 @@ class PyMusix:
 
         self.is_explicit = track_lyrics["explicit"] == 1
         self.is_instrumental = track_lyrics["instrumental"] == 1
-        self.track_lyrics = track_lyrics["lyrics_body"]
+        self.lyrics = track_lyrics["lyrics_body"]
         self.language = track_lyrics["lyrics_language"]
         self.lyrics_url = track_lyrics["backlink_url"].split("?")[0]
         self.snippet = track_snippet["snippet_body"]

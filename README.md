@@ -55,7 +55,7 @@ You are now ready to use PyMusix!
 
 ## 🤌 How to use?
 
-A basic usage is shown below, for more information, please check out the [examples](https://github.com/TrueMyst/pymusix/examples/) given here.
+A basic usage is shown below, for more information, please check out the [examples](https://github.com/TrueMyst/pymusix/tree/main/examples) given here.
 
 ```python
 import os
